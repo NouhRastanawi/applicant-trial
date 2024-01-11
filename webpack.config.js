@@ -12,25 +12,25 @@ module.exports = {
       template: path.join(__dirname, "public", "index.html"),
     }),
   ],
-  devServer: {
-    port: 8008,
-    host: 'dev.june.local',
-    headers: {
-      'Access-Control-Allow-Origin': '*'
-    },
-    proxy: {
-      "/api/**": {
-        target: "https://editor.staging.juneapp.com/",
-        changeOrigin: true,
-        logLevel: 'debug'
-      },
-      "/media/image/**": {
-        target: "https://editor.staging.juneapp.com/",
-        changeOrigin: true,
-        logLevel: 'debug'
-      }
-    }
-  },
+  // devServer: {
+  //   port: 8008,
+  //   host: 'dev.june.local',
+  //   headers: {
+  //     'Access-Control-Allow-Origin': '*'
+  //   },
+  //   proxy: {
+  //     "/api/**": {
+  //       target: "https://editor.staging.juneapp.com/",
+  //       changeOrigin: true,
+  //       logLevel: 'debug'
+  //     },
+  //     "/media/image/**": {
+  //       target: "https://editor.staging.juneapp.com/",
+  //       changeOrigin: true,
+  //       logLevel: 'debug'
+  //     }
+  //   }
+  // },
   module: {
     // exclude node_modules
     rules: [
@@ -43,12 +43,24 @@ module.exports = {
       // `ts` and `tsx` files are parsed using `ts-loader`
       {
         test: /\.(ts|tsx)$/,
-        loader: "ts-loader"
-      }
+        loader: "ts-loader",
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: "asset/resource",
+      },
     ],
   },
   // pass all js files through Babel
   resolve: {
     extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
-  }
+  },
 };
