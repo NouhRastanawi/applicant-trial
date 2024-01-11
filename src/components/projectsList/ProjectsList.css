@@ -1,0 +1,56 @@
+h1 {
+  text-align: center;
+}
+
+h2 {
+  font-size: larger;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  width: calc(33.33% - 16px);
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  border: 1px solid #20C6AF;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .card {
+    width: calc(50% - 16px);
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    width: 100%;
+  }
+}
+
+/* 20C6AF Main Color
+FA9F85 E-Mail Product Color
+B872EF Landing Page Product Color
+FDBE41 Automation Product Color
+262626 Paragraph, Headlines Color */

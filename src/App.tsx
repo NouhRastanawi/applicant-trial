@@ -1,19 +1,26 @@
-import * as React from "react";
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import Login from "./pages/Login";
+import { Route, Routes, Navigate } from "react-router-dom";
+
 import Navbar from "./components/navbar/Navbar";
-import Login from "./components/login/Login";
+
+// importing pages
+import Home from "./pages/Home";
+import LoginPage from "./pages/LoginPage";
+import ProjectsPage from "./pages/ProjectsPage";
+// import Login from "./components/login/Login";
+// import ProjectsList from "./components/projectsList/ProjectsList";
 
 const App = () => {
   return (
     <div>
       <Navbar />
-      <Login />
-      {/* <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </BrowserRouter> */}
+      {/* <Login /> */}
+      {/* <ProjectsList /> */}
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/produkte" element={<ProjectsPage />} />
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<Home />} />
+      </Routes>
     </div>
   );
 };

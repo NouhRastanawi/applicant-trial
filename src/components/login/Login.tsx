@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { handleLogin } from "../../hooks/useAuth";
 import "./Login.css";
 
 const Login = () => {
@@ -6,32 +7,40 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch("http://dev.june.local:8008/api/auth/login_check", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
+  const login = async () => {
+    await handleLogin(username, password);
 
-      // On success
-      if (response.ok) {
-        console.log("Anmeldung erfolgreich!");
-        // redirecting the user to "projects list".
-      } else {
-        const data = await response.json();
-        setError(data.message || "Ungültiger Benutzername oder Passwort");
-      }
-    } catch (error) {
-      console.error("Error during login:", error.message);
-      setError("Beim Anmelden ist ein Fehler aufgetreten");
-    }
   };
+
+  // ... component layout
+
+  // const handleLogin = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       "https://dev.june.local:8008/api/auth/login_check",
+  //       {
+  //         username,
+  //         password,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+
+  //     // On success
+  //     if (response.status === 200) {
+  //       console.log("Anmeldung erfolgreich!");
+  //       // Redirecting the user to "projects list".
+  //     } else {
+  //       setError(response.data.message || "Ungültiger Benutzername oder Passwort");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during login:", error.message);
+  //     setError("Beim Anmelden ist ein Fehler aufgetreten");
+  //   }
+  // };
 
   return (
     <div className="container">
@@ -49,7 +58,7 @@ const Login = () => {
           </div>
         </div>
 
-        <button type="button" onClick={handleLogin}>
+        <button type="button" onClick={login}>
           Login
         </button>
       </form>
