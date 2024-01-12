@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./ProjectsList.css";
+import axiosInstance from "../../api/axios";
 
 const ProjectsList = () => {
   const [data, setData] = useState(null);
@@ -9,19 +10,8 @@ const ProjectsList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await fetch("http://dev.june.local:8008/api/v2/project", {
-        const response = await fetch("https://jsonplaceholder.typicode.com/todos", {
-          headers: {
-            Authorization: "Bearer Token", // Bearer token
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const result = await response.json();
-        setData(result);
+        const response = await axiosInstance.get("v2/project");
+        setData(response.data);
       } catch (error) {
         setError(error);
       } finally {
@@ -55,14 +45,6 @@ const ProjectsList = () => {
           </div>
         )}
       </div>
-      {/* {data && (
-        <ul>
-          {data.map((item) => (
-            <li key={item.id}>{item.title}</li>
-            // data depended
-          ))}
-        </ul>
-      )} */}
     </div>
   );
 };

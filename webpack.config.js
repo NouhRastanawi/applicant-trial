@@ -21,9 +21,7 @@ module.exports = {
     },
     proxy: {
       "/api/**": {
-        // "/api/": {
         target: "https://editor.staging.juneapp.com/",
-        // target: "http://dev.june.local:8008",
         changeOrigin: true,
         logLevel: "debug",
       },

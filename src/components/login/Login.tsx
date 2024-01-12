@@ -1,18 +1,32 @@
 import { useState } from "react";
 import { handleLogin } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const login = async () => {
-    await handleLogin(username, password);
+    try {
+      setError(""); // Reset the error state
 
+      if (!username || !password) {
+        // setError("Stellen Sie sicher, dass die Eingänge ausgefüllt sind.");
+        throw new Error("Stellen Sie sicher, dass die Eingänge ausgefüllt sind.");
+      }
+
+      // await handleLogin(username, password);
+      const response = await handleLogin(username, password);
+      console.log("ressss: ", response);
+      // On successful login, redirect projects page
+      // navigate("/projects");
+    } catch (error) {
+      setError(error.message);
+    }
   };
-
-  // ... component layout
 
   // const handleLogin = async () => {
   //   try {
