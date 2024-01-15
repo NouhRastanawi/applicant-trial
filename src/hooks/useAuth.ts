@@ -7,7 +7,9 @@ export const handleLogin = async (username, password) => {
       username,
       password,
     });
+
+    return response.data;
   } catch (error) {
-    console.error("Login failed:", error.message);
+    throw new Error(error.message);
   }
 };

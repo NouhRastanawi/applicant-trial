@@ -3,7 +3,7 @@ import "./ProjectsList.css";
 import axiosInstance from "../../api/axios";
 
 const ProjectsList = () => {
-  const [data, setData] = useState(null);
+  const [projects, setProjects] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -11,7 +11,8 @@ const ProjectsList = () => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get("v2/project");
-        setData(response.data);
+
+        setProjects(response.data.data);
       } catch (error) {
         setError(error);
       } finally {
@@ -34,12 +35,11 @@ const ProjectsList = () => {
     <div>
       <h1>Projekte</h1>{" "}
       <div className="card-container">
-        {data && (
+        {projects && (
           <div className="card-list">
-            {data.map((item) => (
-              <div key={item.id} className="card">
-                <h2>{item.title}</h2>
-                {/* Additional data fields can be added here */}
+            {projects.map((project) => (
+              <div key={project.id} className="card">
+                <h2>{project.title}</h2>
               </div>
             ))}
           </div>
