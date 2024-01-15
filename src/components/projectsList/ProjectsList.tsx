@@ -1,13 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import "./ProjectsList.css";
 import axiosInstance from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const ProjectsList = () => {
   const [projects, setProjects] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (user === null) {
+      navigate("/login");
+      return;
+    }
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get("v2/project");

@@ -1,34 +1,16 @@
 import { useState, useContext } from "react";
-import { handleLogin } from "../../hooks/useAuth";
 import { AuthContext } from "../../context/AuthContext";
-// import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import { log } from "console";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [error, setError] = useState("");
   const { user, login, error } = useContext(AuthContext);
-  // const navigate = useNavigate();
 
   const submitForm = async (event) => {
     event.preventDefault();
     await login({ username, password });
   };
-  // const login = async () => {
-  //   try {
-  //     setError(""); // Reset the error state
-
-  //     if (!username || !password) {
-  //       throw new Error("Stellen Sie sicher, dass die Eingänge ausgefüllt sind.");
-  //     }
-
-  //     const response = await handleLogin(username, password);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  // };
 
   return (
     <div className="container">

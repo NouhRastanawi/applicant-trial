@@ -30,7 +30,7 @@ h2 {
 }
 
 .card:hover {
-  border: 1px solid #20C6AF;
+  border: 1px solid #20c6af;
   cursor: pointer;
 }
 
@@ -45,9 +45,3 @@ h2 {
     width: 100%;
   }
 }
-
-/* 20C6AF Main Color
-FA9F85 E-Mail Product Color
-B872EF Landing Page Product Color
-FDBE41 Automation Product Color
-262626 Paragraph, Headlines Color */

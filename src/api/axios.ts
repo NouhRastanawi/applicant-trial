@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as Cookies from 'js-cookie';
 
 const axiosInstance = axios.create({
   baseURL: "api/",
@@ -11,7 +12,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Retrieve the JWT token from local storage
-    const token = localStorage.getItem("jwtToken");
+    const token = Cookies.get("jwtToken");
 
     // If a token is present, add the Authorization header to the request
     if (token) {

@@ -1,36 +1,15 @@
-import { createContext, useContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState, useEffect } from "react";
 import { handleLogin } from "../hooks/useAuth";
-
-// Define the type for user data
-// type UserData = {
-//   username: string;
-//   email: string;
-//   id: number;
-//   roles: []
-//   // ...
-// };
+import { useNavigate } from "react-router-dom";
+import * as Cookies from "js-cookie";
 
 type UserData = {
   id: number;
   username: string;
   email: string;
   modules: string[];
-  groups: {
-    id: number;
-    name: string;
-  }[];
-  customer: {
-    id: number;
-    name: string;
-    licenses: any[];
-    technical_name: string;
-    cdn_id: string;
-    cdn_url: string;
-    external_identifier: string;
-    branding_level: number;
-    enable_user_collaboration: boolean;
-    force_two_factor_authentication: boolean;
-  };
+  groups: Group[];
+  customer: Customer;
   enabled: boolean;
   roles: string[];
   created_at: string | null;
@@ -45,6 +24,24 @@ type UserData = {
   ui_locale: string;
   is_activated: boolean;
   additional_email_addresses: string[] | null;
+};
+
+type Group = {
+  id: number;
+  name: string;
+};
+
+type Customer = {
+  id: number;
+  name: string;
+  licenses: any[];
+  technical_name: string;
+  cdn_id: string;
+  cdn_url: string;
+  external_identifier: string;
+  branding_level: number;
+  enable_user_collaboration: boolean;
+  force_two_factor_authentication: boolean;
 };
 
 // Define the type for the context value
@@ -67,6 +64,19 @@ type AuthProviderProps = {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<UserData | null>(null);
   const [error, setError] = useState();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    try {
+      const user = JSON.parse(Cookies.get("user"));
+
+      if (user) {
+        setUser(user);
+      }
+    } catch (error) {
+      setUser(null);
+    }
+  }, []);
 
   const login = async ({ username, password }) => {
     try {
@@ -77,15 +87,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
 
       const data = await handleLogin(username, password);
-      localStorage.setItem("user", data.user);
-      localStorage.setItem("jwtToken", data.token);
+
+      // Set expiration date to 15 days from now
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 15);
+
+      Cookies.set("user", JSON.stringify(data.user), { expires: expirationDate, path: "/" });
+      Cookies.set("jwtToken", data.token, { expires: expirationDate, path: "/" });
+
       setUser(data.user);
+      setTimeout(() => {
+        navigate("/projects");
+      }, 1500);
     } catch (error) {
       setError(error.message);
     }
   };
 
   const logout = () => {
+    Cookies.remove("user", { path: "/" });
+    Cookies.remove("jwtToken", { path: "/" });
     setUser(null);
   };
 
