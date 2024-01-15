@@ -96,9 +96,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       Cookies.set("jwtToken", data.token, { expires: expirationDate, path: "/" });
 
       setUser(data.user);
-      setTimeout(() => {
-        navigate("/projects");
-      }, 1500);
+      navigate("/projects");
+      
     } catch (error) {
       setError(error.message);
     }
@@ -108,6 +107,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     Cookies.remove("user", { path: "/" });
     Cookies.remove("jwtToken", { path: "/" });
     setUser(null);
+
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
   };
 
   // Provide the context value to the children

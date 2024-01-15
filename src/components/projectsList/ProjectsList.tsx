@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import "./ProjectsList.css";
 import axiosInstance from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import "./ProjectsList.css";
 
 const ProjectsList = () => {
   const [projects, setProjects] = useState(null);
@@ -12,6 +12,7 @@ const ProjectsList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // redirect when there is no user
     if (user === null) {
       navigate("/login");
       return;
@@ -32,7 +33,7 @@ const ProjectsList = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return  <div className="loader"></div> ;
   }
 
   if (error) {

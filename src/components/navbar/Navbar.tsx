@@ -19,7 +19,7 @@ const Navbar = () => {
         </li>
 
         <li className="at-end">
-          {user ? <li>{user.username}</li> : <></>}
+          {user ? <p>{user.username}</p> : <></>}
           {user === null ? (
             <Link to="/login">Login</Link>
           ) : (

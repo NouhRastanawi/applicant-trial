@@ -1,16 +1,26 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("june.application-nouh");
+  const [password, setPassword] = useState("Application1234!");
   const { user, login, error } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const submitForm = async (event) => {
     event.preventDefault();
     await login({ username, password });
   };
+
+  // useEffect(() => {
+  //   console.log("log user: ", user);
+  //   if (user) {
+  //     navigate("/");
+  //     return;
+  //   }
+  // }, []);
 
   return (
     <div className="container">
